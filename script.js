@@ -1,4 +1,4 @@
-let apikey = "28f0803f35fcbdcdc372dcd687b183aa";
+let apikey = "c54676c6d56fa7ff045f8f9cf259902c";
 let url = "http://api.exchangerate.host/convert";
 let pFromTo = document.querySelector(".ft");
 let pToFrom = document.querySelector(".tf");
@@ -51,7 +51,7 @@ async function converter(type) {
             }
             let response = await fetch(apiurl);
             let data = await response.json();
-
+            
             let apiurlft = `${url}?access_key=${apikey}&from=${from}&to=${to}&amount=1`;
             let response2 = await fetch(apiurlft);
             let data2 = await response2.json();
@@ -80,6 +80,7 @@ async function converter(type) {
                     input.value = data.result;
                 }
             }
+            console.log(data)
         }
     }
     else{
