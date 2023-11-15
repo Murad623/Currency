@@ -1,4 +1,4 @@
-let apikey = "c54676c6d56fa7ff045f8f9cf259902c";
+let apikey = "62bdcd2fe3e3adac06d10038e9dd99e7";
 let url = "http://api.exchangerate.host/convert";
 let pFromTo = document.querySelector(".ft");
 let pToFrom = document.querySelector(".tf");
@@ -81,6 +81,8 @@ async function converter(type) {
                 }
             }
             console.log(data)
+            console.log("data")
+
         }
     }
     else{
