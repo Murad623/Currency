@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+        <title>Currency converter</title>
+    </head>
+    <body>
+        <header>
+            <div class="container">
+                <img src="img/bank.png" alt="">
+                <nav>
+                    <ul class="menu">
+                        <li class="selec">БАНК</li>
+                        <li>БИЗНЕС</li>
+                        <li>ИНВЕСТИЦИИ</li>
+                        <li>СТРАХОВАНИЕ</li>
+                        <li>МОБАЙЛ</li>
+                        <li>ПУТЕШЕСТВИЯ</li>
+                        <li>РАЗВЛЕЧЕНИЯ</li>
+                        <li><span><b>ВОЙТИ</b></span></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <main>
+            <h1>Конвертер валют онлайн</h1>
+            <div class="all">
+                <div class="left">
+                    <p class="text">У меня есть </p>
+                    <div id="fromCur" class="currency">
+                        <button id="RUB" class="from selected">RUB</button>
+                        <button id="USD" class="from">USD</button>
+                        <button id="EUR" class="from">EUR</button>
+                        <button id="GBP" class="from">GBP</button>
+                    </div>
+                    <div class="field1">
+                        <input type="number" value="1" class="amount" min="0">
+                        <p class="ft"></p>
+                    </div>
+                </div>
+                <div class="right">
+                    <p class="text">Хочу приобрести</p>
+                    <div id="toCur" class="currency2">
+                        <button id="RUB" class="to">RUB</button>
+                        <button id="USD" class="to" class="to selected">USD</button>
+                        <button id="EUR" class="to">EUR</button>
+                        <button id="GBP" class="to">GBP</button>
+                    </div>
+                    <div class="field2">
+                        <input type="number" value="1" class="res" min="0">
+                        <p class="tf"></p>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <script src="script.js"></script>
+    </body>
+</html>
