@@ -1,6 +1,4 @@
-// let apikey = "62bdcd2fe3e3adac06d10038e9dd99e7";
 let apikey = "c414195acfe82a70b3d52016";
-// let url = "http://api.exchangerate.host/convert";
 let url = "https://v6.exchangerate-api.com/v6/c414195acfe82a70b3d52016/latest/USD";
 let pFromTo = document.querySelector(".ft");
 let pToFrom = document.querySelector(".tf");
@@ -31,7 +29,6 @@ currencyButtons.forEach(function (button) {
 let from = "RUB";
 let to = "USD";
 let res = document.querySelector(".res");
-// let amount = Number(document.querySelector('.amount').value)
 async function converter(type) {
     let amount;
     if(type == "input"){
@@ -46,32 +43,23 @@ async function converter(type) {
         if(amount>=0){
             let apiurl;
             if(type == "input"){
-                apiurl = `${url}?access_key=${apikey}&from=${from}&to=${to}&amount=${amount}`;
+                apiurl = `${url}?access_key=${apikey}&from=${from}`;
             }
             else if(type == "res"){
-                apiurl = `${url}?access_key=${apikey}&from=${to}&to=${from}&amount=${amount}`;
+                apiurl = `${url}?access_key=${apikey}&from=${to}`;
             }
             let response = await fetch(apiurl);
             let data = await response.json();
             
-            let apiurlft = `${url}?access_key=${apikey}&from=${from}&to=${to}&amount=1`;
-            let response2 = await fetch(apiurlft);
-            let data2 = await response2.json();
-            pFromTo.innerText = "1"+to+" = "+data2.result+from;
-            
-            let apiurltf = `${url}?access_key=${apikey}&from=${to}&to=${from}&amount=1`;
-            let response3 = await fetch(apiurltf);
-            let data3 = await response3.json();
-            pToFrom.innerText = "1"+to+" = "+data3.result+from;
             
             if(type == "input"){
                 if(data.result == undefined){
                     res.value = "0"
                 }
                 else{
-                    res.value = data.result;
+                    res.value = data.conversion_rates[to]*amount;
                 }
-                console.log("res = "+data.result)
+                console.log("res = "+ data.conversion_rates[to]*amount)
             }
             else if(type == "res"){
                 console.log("input = "+data.result)
@@ -79,11 +67,19 @@ async function converter(type) {
                     input.value = "0";
                 }
                 else{
-                    input.value = data.result;
+                    input.value = (data.conversion_rates[from])*amount;
                 }
             }
-            console.log(data)
-            console.log("data")
+            let apiurlft = `${url}?access_key=${apikey}&from=${from}`;
+            let response2 = await fetch(apiurlft);
+            let data2 = await response2.json();
+            pFromTo.innerText = "1 "+from+" = "+data2.conversion_rates[to]+" "+to;
+            
+            let apiurltf = `${url}?access_key=${apikey}&from=${to}`;
+            let response3 = await fetch(apiurltf);
+            let data3 = await response3.json();
+            console.log("from "+data.conversion_rates[from])
+            pToFrom.innerText = "1 "+to+" = "+data3.conversion_rates[from]+" "+from;
 
         }
     }
@@ -94,8 +90,8 @@ async function converter(type) {
         else if(type == "res"){
             input.value = amount;
         }
-        pFromTo.innerText = "1"+from+" = "+"1"+to;
-        pToFrom.innerText = "1"+to+" = "+"1"+from;
+        pFromTo.innerText = "1 "+from+" = "+"1 "+to;
+        pToFrom.innerText = "1 "+to+" = "+"1 "+from;
     }
 }
 async function fromBtnFcn(e){
