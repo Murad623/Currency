@@ -15,7 +15,6 @@ document.querySelectorAll(".currency button").forEach((button) => {
     button.addEventListener("click", handleCurrencyClick);
 });
 defaultCurrency.click();
-
 let defaultCurrencyButton = document.querySelector(".currency2 button:nth-child(2)");
 defaultCurrencyButton.classList.add("selected");
 let currencyButtons = document.querySelectorAll(".currency2 button");
@@ -33,54 +32,50 @@ async function converter(type) {
     let amount;
     if(type == "input"){
         amount = Number(document.querySelector('.amount').value)
-        console.log("input: "+amount)
     }
     else if(type == "res"){
         amount = Number(document.querySelector('.res').value)
-        console.log("res: "+amount)
     }
     if(to != from){
         if(amount>=0){
             let apiurl;
             if(type == "input"){
-                apiurl = `${url}?access_key=${apikey}&from=${from}`;
+                apiurl = `${url}?&from=${from}`;
             }
             else if(type == "res"){
-                apiurl = `${url}?access_key=${apikey}&from=${to}`;
+                apiurl = `${url}?&from=${to}`;
             }
-            let response = await fetch(apiurl);
-            let data = await response.json();
-            
-            
-            if(type == "input"){
-                if(data.result == undefined){
-                    res.value = "0"
-                }
-                else{
-                    res.value = data.conversion_rates[to]*amount;
-                }
-                console.log("res = "+ data.conversion_rates[to]*amount)
-            }
-            else if(type == "res"){
-                console.log("input = "+data.result)
-                if(data.result == undefined){
-                    input.value = "0";
-                }
-                else{
-                    input.value = (data.conversion_rates[from])*amount;
-                }
-            }
+            fetch(apiurl)
+                .then(response =>response.json())
+                .then(data =>{
+                    if(type == "input"){
+                        if(data.result == undefined){
+                            res.value = "0"
+                        }
+                        else{
+                            res.value = data.conversion_rates[to]*amount;
+                        }
+                    }
+                    else if(type == "res"){
+                        if(data.result == undefined){
+                            input.value = "0";
+                        }
+                        else{
+                            input.value = (data.conversion_rates[from])*amount;
+                        }
+                    }
+                })
+                .catch(error => {
+                    alert("Internet bağlantınızı yoxlayın")
+                });
             let apiurlft = `${url}?access_key=${apikey}&from=${from}`;
             let response2 = await fetch(apiurlft);
             let data2 = await response2.json();
             pFromTo.innerText = "1 "+from+" = "+data2.conversion_rates[to]+" "+to;
-            
             let apiurltf = `${url}?access_key=${apikey}&from=${to}`;
             let response3 = await fetch(apiurltf);
             let data3 = await response3.json();
-            console.log("from "+data.conversion_rates[from])
             pToFrom.innerText = "1 "+to+" = "+data3.conversion_rates[from]+" "+from;
-
         }
     }
     else{
@@ -117,5 +112,4 @@ input.addEventListener("input", () => {
 res.addEventListener("input", () => {
     converter("res")
 });
-
 converter("input")
