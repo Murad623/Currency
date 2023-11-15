@@ -1,5 +1,7 @@
-let apikey = "62bdcd2fe3e3adac06d10038e9dd99e7";
-let url = "http://api.exchangerate.host/convert";
+// let apikey = "62bdcd2fe3e3adac06d10038e9dd99e7";
+let apikey = "c414195acfe82a70b3d52016";
+// let url = "http://api.exchangerate.host/convert";
+let url = "https://v6.exchangerate-api.com/v6/c414195acfe82a70b3d52016/latest/USD";
 let pFromTo = document.querySelector(".ft");
 let pToFrom = document.querySelector(".tf");
 let defaultCurrency = document.querySelector(".currency .selected");
