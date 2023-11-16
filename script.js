@@ -1,4 +1,3 @@
-let apikey = "c414195acfe82a70b3d52016";
 let url = "https://v6.exchangerate-api.com/v6/c414195acfe82a70b3d52016/latest/USD";
 let pFromTo = document.querySelector(".ft");
 let pToFrom = document.querySelector(".tf");
