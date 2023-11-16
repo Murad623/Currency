@@ -1,4 +1,4 @@
-let url = "https://v6.exchangerate-api.com/v6/c414195acfe82a70b3d52016/latest/USD";
+let url = "https://v6.exchangerate-api.com/v6/7196e6b10d1c975046c67bdd/latest/";
 let pFromTo = document.querySelector(".ft");
 let pToFrom = document.querySelector(".tf");
 let defaultCurrency = document.querySelector(".currency .selected");
@@ -39,10 +39,10 @@ async function converter(type) {
         if(amount>=0){
             let apiurl;
             if(type == "input"){
-                apiurl = `${url}?&from=${from}`;
+                apiurl = `${url}${from}`;
             }
             else if(type == "res"){
-                apiurl = `${url}?&from=${to}`;
+                apiurl = `${url}${to}`;
             }
             fetch(apiurl)
                 .then(response =>response.json())
@@ -52,7 +52,7 @@ async function converter(type) {
                             res.value = "0"
                         }
                         else{
-                            res.value = data.conversion_rates[to]*amount;
+                            res.value = ((data.conversion_rates[to])*amount).toFixed(2);
                         }
                     }
                     else if(type == "res"){
@@ -60,21 +60,21 @@ async function converter(type) {
                             input.value = "0";
                         }
                         else{
-                            input.value = (data.conversion_rates[from])*amount;
+                            input.value = ((data.conversion_rates[from])*amount).toFixed(2);
                         }
                     }
                 })
                 .catch(error => {
                     alert("Internet bağlantınızı yoxlayın")
                 });
-            let apiurlft = `${url}?access_key=${apikey}&from=${from}`;
+            let apiurlft = `${url}${from}`;
             let response2 = await fetch(apiurlft);
             let data2 = await response2.json();
-            pFromTo.innerText = "1 "+from+" = "+data2.conversion_rates[to]+" "+to;
-            let apiurltf = `${url}?access_key=${apikey}&from=${to}`;
+            pFromTo.innerText = "1 "+from+" = "+(data2.conversion_rates[to]).toFixed(2)+" "+to;
+            let apiurltf = `${url}${to}`;
             let response3 = await fetch(apiurltf);
             let data3 = await response3.json();
-            pToFrom.innerText = "1 "+to+" = "+data3.conversion_rates[from]+" "+from;
+            pToFrom.innerText = "1 "+to+" = "+(data3.conversion_rates[from]).toFixed(2)+" "+from;
         }
     }
     else{
@@ -110,5 +110,17 @@ input.addEventListener("input", () => {
 });
 res.addEventListener("input", () => {
     converter("res")
+});
+input.addEventListener("keypress", function (evt) {
+    if (evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57)
+    {
+        evt.preventDefault();
+    }
+});
+res.addEventListener("keypress", function (evt) {
+    if (evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57)
+    {
+        evt.preventDefault();
+    }
 });
 converter("input")
