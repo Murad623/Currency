@@ -1,9 +1,10 @@
-let url = "https://v6.exchangerate-api.com/v6/7196e6b10d1c975046c67bdd/latest/";
+let url = "https://v6.exchangerate-api.com/v6/e73023fec0af1a02d30919bb/latest/";
 let pFromTo = document.querySelector(".ft");
 let pToFrom = document.querySelector(".tf");
 let defaultCurrency = document.querySelector(".currency .selected");
 let input = document.querySelector(".amount")
 let fromOrTo = true;
+let evtwhich = 46
 let handleCurrencyClick = (event) => {
     document.querySelectorAll(".currency button").forEach((button) => {
         button.classList.remove("selected");
@@ -13,6 +14,30 @@ let handleCurrencyClick = (event) => {
 document.querySelectorAll(".currency button").forEach((button) => {
     button.addEventListener("click", handleCurrencyClick);
 });
+function dotController(evt){
+    if((evt.target.value.replace(/[1-9]/ig,"")).length !=0){
+        if(evt.which == 190){
+            evtwhich = 48
+        }
+    }
+    else{
+        evtwhich = 46
+    }
+    if(evt.target.value.indexOf(".") == -1){
+        evt.target.value = evt.target.value.replace(/[,]/ig,".")
+    }
+    else if(evt.target.value.indexOf(".") >= 0){
+        evtwhich = 48
+    }
+}
+function inputController(evt){
+    if (evt.which != 8 && evt.which != 0 && evt.which != 44 && evt.which < evtwhich || evt.which > 57){
+        evt.preventDefault();
+    }
+    else if((evt.which == 44)&&(evt.target.value.indexOf(".") >= 0)){
+        evt.preventDefault();
+    }
+}
 defaultCurrency.click();
 let defaultCurrencyButton = document.querySelector(".currency2 button:nth-child(2)");
 defaultCurrencyButton.classList.add("selected");
@@ -111,16 +136,8 @@ input.addEventListener("input", () => {
 res.addEventListener("input", () => {
     converter("res")
 });
-input.addEventListener("keypress", function (evt) {
-    if (evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57)
-    {
-        evt.preventDefault();
-    }
-});
-res.addEventListener("keypress", function (evt) {
-    if (evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57)
-    {
-        evt.preventDefault();
-    }
-});
+input.addEventListener("keypress", inputController);
+input.addEventListener("keyup", dotController);
+res.addEventListener("keypress", inputController);
+res.addEventListener("keyup", dotController);
 converter("input")
