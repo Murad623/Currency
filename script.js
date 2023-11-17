@@ -31,7 +31,7 @@ function dotController(evt){
     }
 }
 function inputController(evt){
-    if (evt.which != 8 && evt.which != 0 && evt.which != 44 && evt.which < evtwhich || evt.which > 57){
+    if (evt.which != 8 && evt.which != 0 && evt.which != 44 && evt.which < evtwhich || evt.which > 57 || evt.which == 47){
         evt.preventDefault();
     }
     else if((evt.which == 44)&&(evt.target.value.indexOf(".") >= 0)){
